@@ -33,6 +33,10 @@ h3 {
   font-weight: bold;
 }
 
+.complete {
+  text-decoration: line-through;
+}
+
 .btn {
   display: block;
   text-align: center;
@@ -47,10 +51,15 @@ h3 {
 }
 
 .enter:hover,
-.refresh:hover {
+.refresh:hover,
+.options:hover {
   cursor: pointer;
 }
 
 .to-do li:last-child {
   display: block;
+}
+
+.to-do li:nth-child(2) {
+  display: flex;
 }
