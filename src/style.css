@@ -8,24 +8,12 @@ h1 {
   margin-bottom: 0;
 }
 
-h3 {
-  margin: 0;
-}
-
 .to-do {
   list-style: none;
   margin: 10% auto;
   max-width: 40%;
   padding-inline-start: 0;
   box-shadow: 5px 5px 10px grey;
-}
-
-.to-do li {
-  border-bottom: 1px solid lightgray;
-  padding: 3%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .add {
@@ -39,6 +27,23 @@ h3 {
   font-weight: bold;
 }
 
+.main {
+  display: flex;
+  padding: 3% 0; 
+}
+
+.edit {
+  display: block;
+  resize: none;
+  border: none;
+  padding: 5%;
+  height: 20px;
+  overflow: auto;
+  width: 200px;
+  outline: none;
+  font-size: 16px;
+}
+
 .complete {
   text-decoration: line-through;
   color: red;
@@ -49,6 +54,15 @@ h3 {
   text-align: center;
   text-decoration: none;
   color: gray;
+}
+
+.to-do li {
+  border-bottom: 1px solid lightgray;
+  display: flex;
+  line-height: 35px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3%;
 }
 
 .btn:hover {
@@ -69,6 +83,12 @@ h3 {
   text-transform: capitalize;
   justify-content: space-between;
   flex-wrap: wrap;
+  margin-right: -2%;
+  width: 10%;
+}
+
+.changeback {
+  background-color: lightyellow;
 }
 
 .optcard p {
@@ -104,4 +124,5 @@ h3 {
 
 .to-do li:nth-child(2) {
   display: flex;
+  padding: 3%;
 }

@@ -6,7 +6,7 @@ export default class {
   }
 
     addItem = (value) => {
-      const ind = this.list.length;
+      const ind = this.list.length + 1;
       if (value) {
         value = value.trim();
         const listItem = {
