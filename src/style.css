@@ -2,6 +2,10 @@ body {
   box-sizing: border-box;
 }
 
+h3 {
+  margin: 0;
+}
+
 .to-do {
   list-style: none;
   margin: 10% auto;
@@ -18,10 +22,6 @@ body {
   justify-content: space-between;
 }
 
-h3 {
-  margin: 0;
-}
-
 .add {
   width: 100%;
   box-sizing: border-box;
@@ -35,6 +35,7 @@ h3 {
 
 .complete {
   text-decoration: line-through;
+  color: red;
 }
 
 .btn {
@@ -42,6 +43,41 @@ h3 {
   text-align: center;
   text-decoration: none;
   color: gray;
+}
+
+.btn:hover {
+  color: green;
+}
+
+.optcard {
+  display: flex;
+  border: 1px solid;
+  position:relative;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  text-align: center;
+  background: lightgray;
+  border-radius: 5px;
+  font-weight: 550;
+  text-transform: capitalize;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.optcard p {
+  margin: 0;
+  padding: 5%;
+  width: 100%;
+}
+
+.optcard p:hover {
+  background: blue;
+  color: black;
+}
+
+.inactive {
+  display: none;
 }
 
 .enter,

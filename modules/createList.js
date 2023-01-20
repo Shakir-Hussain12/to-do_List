@@ -1,29 +1,15 @@
-const createList = (todo, list) => {
-  const removeItem = () => {
-    const filtered = list.filter((elem) => elem.completed === false);
-    list = filtered;
-  };
+import TodoList from './methods.js';
+import resetIndex from './resetIndex.js';
+import todoHead from './todoHead.js';
 
+const createList = (todo, list) => {
   if (todo.hasChildNodes()) {
     todo.innerHTML = '';
   }
-  const template = document.createElement('template');
-  template.innerHTML = `<li>
-  <h3>Today's To Do</h3>
-    <button class="refresh">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
-      <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/></svg>
-    </button>
-  </li>`.trim();
-  todo.appendChild(template.content.firstElementChild);
 
-  template.innerHTML = `<li>
-    <input class="add" type="text" placeholder="Add to your list..."><button class="enter"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
-      </svg></button>
-  </li>`.trim();
-  todo.appendChild(template.content.firstElementChild);
+  // display all todo List items
+  todoHead(todo);
+  const methods = new TodoList(list);
 
   if (list.length > 0) {
     list.forEach((item) => {
@@ -33,7 +19,7 @@ const createList = (todo, list) => {
 
       const template = document.createElement('template');
       if (item.completed) {
-        template.innerHTML = `<li><span class='complete'><input type="checkbox" checked>${description}</span><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+        template.innerHTML = `<li><span class='complete'><input type="checkbox" checked>${description}</span><span class="options"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
         <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
         </svg></span></li>`.trim();
       } else {
@@ -50,6 +36,13 @@ const createList = (todo, list) => {
     a.classList.add('btn');
     todo.appendChild(li);
 
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      list = methods.removeItem();
+      localStorage.setItem('listData', JSON.stringify(list));
+      createList(todo, list);
+    });
+
     const check = todo.querySelectorAll('input[type="checkbox"]');
     const options = document.querySelectorAll('.options');
     check.forEach((inp) => {
@@ -59,26 +52,49 @@ const createList = (todo, list) => {
           if (item.description === par.innerText) {
             par.classList.toggle('complete');
             item.completed = !item.completed;
+            localStorage.setItem('listData', JSON.stringify(list));
           }
         });
       });
     });
 
-    a.addEventListener('click', (e) => {
-      e.preventDefault();
-      removeItem();
-      createList(todo, list);
-    });
-
     options.forEach((option) => {
       const par = option.parentElement;
       option.addEventListener('click', () => {
-        const newVal = prompt('Enter New Description');
-        list.forEach((item) => {
-          if (item.description === par.innerText) {
-            item.description = newVal;
-            createList(todo, list);
-          }
+        option.classList.add('inactive');
+        const opt = document.createElement('span');
+        opt.classList.add('optcard');
+        par.appendChild(opt);
+        const p1 = opt.appendChild(document.createElement('p'));
+        p1.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+        </svg>`;
+        const p2 = opt.appendChild(document.createElement('p'));
+        p2.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+          <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+        </svg>`;
+        p1.addEventListener('click', () => {
+          const newVal = prompt('Enter New Description');
+          list.forEach((item) => {
+            if (item.description === par.querySelector('span').innerText) {
+              item.description = newVal;
+              localStorage.setItem('listData', JSON.stringify(list));
+              createList(todo, list);
+            }
+          });
+        });
+
+        p2.addEventListener('click', () => {
+          list.filter((val, ind, arr) => {
+            if (val.description === par.querySelector('span').innerText && val.index === ind) {
+              arr.splice(ind, 1);
+              return true;
+            }
+            return false;
+          });
+          resetIndex(list);
+          createList(todo, list);
         });
       });
     });
@@ -88,25 +104,16 @@ const createList = (todo, list) => {
   const add = document.querySelector('.add');
   const enter = document.querySelector('.enter');
 
-  const ind = list.length;
-  const addItem = (value) => {
-    const listItem = {
-      description: value,
-      completed: false,
-      index: ind,
-    };
-    list.push(listItem);
-    createList(todo, list);
-  };
-
   add.addEventListener('keypress', (e) => {
     if (e.code === 'Enter') {
-      addItem(add.value);
+      methods.addItem(add.value);
+      createList(todo, list);
     }
   });
 
   enter.addEventListener('click', () => {
-    addItem(add.value);
+    methods.addItem(add.value);
+    createList(todo, list);
   });
 
   refresh.addEventListener('click', () => {
