@@ -1,3 +1,4 @@
+import changeStatus from './changeStatus.js';
 import TodoList from './methods.js';
 import resetIndex from './resetIndex.js';
 import todoHead from './todoHead.js';
@@ -45,19 +46,8 @@ const createList = (todo, list) => {
 
     const check = todo.querySelectorAll('input[type="checkbox"]');
     const options = document.querySelectorAll('.options');
-    check.forEach((inp) => {
-      const par = inp.parentElement;
-      inp.addEventListener('click', () => {
-        list.forEach((item) => {
-          if (item.description === par.innerText) {
-            par.classList.toggle('complete');
-            item.completed = !item.completed;
-            localStorage.setItem('listData', JSON.stringify(list));
-          }
-        });
-      });
-    });
 
+    changeStatus(check, list);
     options.forEach((option) => {
       const par = option.parentElement;
       option.addEventListener('click', () => {
