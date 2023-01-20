@@ -52,7 +52,7 @@ h3 {
 .optcard {
   display: flex;
   border: 1px solid;
-  position:relative;
+  position: relative;
   top: 0;
   right: 0;
   z-index: 1;

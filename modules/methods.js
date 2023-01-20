@@ -1,4 +1,4 @@
-import resetIndex from './resetIndex';
+import resetIndex from './resetIndex.js';
 
 export default class {
   constructor(list) {
