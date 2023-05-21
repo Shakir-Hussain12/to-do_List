@@ -10,8 +10,10 @@ h1 {
 
 .to-do {
   list-style: none;
+  border-radius: 10px;
+  background-color: beige;
   margin: 10% auto;
-  max-width: 40%;
+  max-width: 50%;
   padding-inline-start: 0;
   box-shadow: 5px 5px 10px grey;
 }
@@ -20,6 +22,7 @@ h1 {
   width: 100%;
   box-sizing: border-box;
   line-height: 25px;
+  background-color: beige;
   border: none;
   outline: none;
   font-style: italic;
@@ -56,6 +59,11 @@ h1 {
   color: gray;
 }
 
+.btn:hover {
+  color: red;
+  cursor: pointer;
+}
+
 .to-do li {
   border-bottom: 1px solid lightgray;
   display: flex;
@@ -63,10 +71,6 @@ h1 {
   align-items: center;
   justify-content: space-between;
   padding: 0 3%;
-}
-
-.btn:hover {
-  color: green;
 }
 
 .optcard {
@@ -98,9 +102,15 @@ h1 {
 }
 
 .optcard p:hover {
-  background: blue;
+  background: green;
   color: black;
 }
+
+.optcard p:nth-child(2):hover {
+  background: red;
+  color: black;
+}
+
 
 .inactive {
   display: none;
